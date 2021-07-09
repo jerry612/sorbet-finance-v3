@@ -330,6 +330,8 @@ function AddLiquidityPanel(props: PoolParams) {
       if (token0 && token1 && guniRouter && account && poolDetails) {
         let zeroApproved = false;
         let oneApproved = false;
+        setIsApproved0(true);
+        setIsApproved1(true);
         setInputError(null);
         if (!input0 && !input1) {
           setAddEnabled(false);

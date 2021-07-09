@@ -146,6 +146,7 @@ function RemoveLiquidityPanel(props: PoolParams) {
       if (guniRouter && account && poolDetails && guniPool) {
         let approved = false;
         setInputError(null);
+        setIsApproved(true);
         const input = inputBurn ? ethers.utils.parseUnits(inputBurn, poolDetails.decimals.toString()) : ethers.constants.Zero;
         if (input.eq(0)) {
           setRemoveEnabled(false);
@@ -177,6 +178,8 @@ function RemoveLiquidityPanel(props: PoolParams) {
     setInputBurn(null);
     setExpected1(null);
     setExpected0(null);
+    setIsApproved(true);
+    setNoInput(true);
     setShowDetailsModal(false);
     if (guniPool && token0 && token1) {
       const details = await fetchPoolDetails(guniPool, token0, token1, account);

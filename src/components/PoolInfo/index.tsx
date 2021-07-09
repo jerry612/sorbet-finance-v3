@@ -183,7 +183,7 @@ function PoolDetails(props: PoolParams) {
       {poolDetails ? 
         <InnerBox>
           <TitleArea>
-            <LogoWrapper><DoubleCurrencyLogo currency0={currency0 ? currency0 : undefined} currency1={currency1 ? currency1 : undefined} size={36} margin={true} /></LogoWrapper>
+            <LogoWrapper><DoubleCurrencyLogo currency0={currency1 ? currency1 : undefined} currency1={currency0 ? currency0 : undefined} size={36} margin={true} /></LogoWrapper>
             <LeftTitle>{`${poolDetails.symbol0}/${poolDetails.symbol1} LP`}</LeftTitle>
             <ButtonSmall onClick={() => handleSeeMore()}>{seeMoreText}</ButtonSmall>
           </TitleArea>
