@@ -46,7 +46,16 @@ export const Button = styled(ButtonPink)`
 
 export const MarginLeft = styled.div`
   margin-left: 8%;
+  @media only screen and (max-width: 500px) {
+    font-size: 0.9rem;
+  }
 `
+
+export const MarginButton = styled(ButtonPink)`
+  margin-left: 8%;
+  margin-right 8%;
+  width: 84%;
+`;
 
 export const Column = styled.div`
   width: 100%;
@@ -73,10 +82,6 @@ const ColoredWrappedPlus = styled(WrappedPlus)`
     stroke: ${({ active }) => (active ? '#4169e1' : '#808080')};
   }
 `
-
-export const MAX_UINT = ethers.BigNumber.from(
-  '115792089237316195423570985008687907853269984665640564039457584007913129639935'
-)
 
 function AddLiquidityPanel(props: PoolParams) {
   const [poolDetails, setPoolDetails] = useState<PoolDetails | null>()
@@ -142,12 +147,13 @@ function AddLiquidityPanel(props: PoolParams) {
   const handleApprove0 = async () => {
     setWaitMessage(null)
     setIsTransactionPending(false)
+    const input = input0 ? ethers.utils.parseUnits(input0, poolDetails?.decimals0.toString()) : ethers.constants.Zero;
     if (token0 && guniRouter && poolDetails) {
       setShowTransactionModal(true)
       setWaitMessage(`Approve ${poolDetails.symbol0}`)
       let tx;
       try {
-        tx = await token0.approve(guniRouter.address, MAX_UINT)
+        tx = await token0.approve(guniRouter.address, input)
       } catch(_) {
         setShowTransactionModal(false);
         return;
@@ -169,12 +175,13 @@ function AddLiquidityPanel(props: PoolParams) {
   const handleApprove1 = async () => {
     setWaitMessage(null)
     setIsTransactionPending(false)
+    const input = input1 ? ethers.utils.parseUnits(input1, poolDetails?.decimals1.toString()) : ethers.constants.Zero;
     if (token1 && guniRouter && poolDetails) {
       setShowTransactionModal(true)
       setWaitMessage(`Approve ${poolDetails.symbol1}`)
       let tx;
       try {
-        tx = await token1.approve(guniRouter.address, MAX_UINT)
+        tx = await token1.approve(guniRouter.address, input)
       } catch(_) {
         setShowTransactionModal(false);
         return;
@@ -397,8 +404,8 @@ function AddLiquidityPanel(props: PoolParams) {
 
   const reset = async () => {
     setInputError(null)
-    setIsApproved0(false)
-    setIsApproved1(false)
+    setIsApproved0(true)
+    setIsApproved1(true)
     setExpected0(null)
     setExpected1(null)
     setInput0(null)
@@ -555,11 +562,11 @@ function AddLiquidityPanel(props: PoolParams) {
               </MarginLeft>
               <br></br><br></br>
               <Area>
-                <Button disabled={false} onClick={() => handleDeposit()}>Submit Transaction</Button>
+                <MarginButton disabled={false} onClick={() => handleDeposit()}>Submit Transaction</MarginButton>
               </Area>
               <br></br>
               <Area>
-                <Button disabled={false} onClick={() => handleCancel()}>Cancel</Button>
+                <MarginButton disabled={false} onClick={() => handleCancel()}>Cancel</MarginButton>
               </Area>
               <br></br><br></br>
               </Column>

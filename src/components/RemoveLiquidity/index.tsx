@@ -13,7 +13,7 @@ import { Contract } from '@ethersproject/contracts'
 import TransactionConfirmationModal from 'components/TransactionConfirmationModal'
 //import useUSDCPrice from 'hooks/useUSDCPrice'
 //import { useTranslation } from 'react-i18next'
-import { Area, Button, MarginLeft, Column, Row, Back, MAX_UINT, Input } from '../AddLiquidity'
+import { Area, Button, MarginButton, MarginLeft, Column, Row, Back, Input } from '../AddLiquidity'
 import {Box, Title} from 'pages/Pools'
 import Modal from 'components/Modal'
 import '../AddLiquidity/toggle.css';
@@ -57,12 +57,13 @@ function RemoveLiquidityPanel(props: PoolParams) {
   const handleApprove = async () => {
     setWaitMessage(null);
     setIsTransactionPending(false);
-    if (guniPool && guniRouter && poolDetails) {
+    const input = inputBurn ? ethers.utils.parseUnits(inputBurn, poolDetails?.decimals.toString()) : ethers.constants.Zero;
+    if (guniPool && guniRouter && poolDetails && input.gt(0)) {
       setShowTransactionModal(true);
       setWaitMessage(`Approve G-UNI`);
       let tx;
       try {
-        tx = await guniPool.approve(guniRouter.address, MAX_UINT)
+        tx = await guniPool.approve(guniRouter.address, input)
       } catch(_) {
         setShowTransactionModal(false);
         return;
@@ -249,11 +250,11 @@ function RemoveLiquidityPanel(props: PoolParams) {
               </MarginLeft>
               <br></br><br></br>
               <Area>
-                <Button onClick={() => handleBurn()} disabled={false}>Submit Transaction</Button>
+                <MarginButton onClick={() => handleBurn()} disabled={false}>Submit Transaction</MarginButton>
               </Area>
               <br></br>
               <Area>
-                <Button onClick={() => handleCancel()}>Cancel</Button>
+                <MarginButton onClick={() => handleCancel()}>Cancel</MarginButton>
               </Area>
               <br></br><br></br>
               </Column>

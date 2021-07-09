@@ -62,6 +62,9 @@ const ButtonSmall = styled(ButtonPink)`
   margin-right: 1rem;
   padding-top: 0.03rem;
   padding-bottom: 0.03rem;
+  @media only screen and (max-width: 500px) {
+    width: 20%;
+  }
 `;
 
 const ButtonMedium = styled(ButtonPink)`
@@ -72,6 +75,9 @@ const InnerBox = styled.div`
   background-color: ${({ theme }) => theme.bg2};
   border-radius: 0.5rem;
   border: 1px solid #7d7f7c;
+  @media only screen and (max-width: 500px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const TitleArea = styled.div`
@@ -92,14 +98,23 @@ const Title = styled.p`
   margin-left: 1rem;
   font-weight: 800;
   font-size: 1.2rem;
+  @media only screen and (max-width: 500px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const LogoWrapper = styled.p`
   margin-left: 1rem;
+  @media only screen and (max-width: 500px) {
+    margin-left: 0.5rem;
+  }
 `;
 
 const LeftTitle = styled(Title)`
   margin-left: -9.5rem;
+  @media only screen and (max-width: 500px) {
+    margin-left: -1rem;
+  }
 `;
 
 const DetailsBox = styled.div`
