@@ -89,9 +89,11 @@ function RemoveLiquidityPanel(props: PoolParams) {
       setWaitMessage(`Burn G-UNI and remove ${useEth && is0Weth ? 'ETH' : poolDetails.symbol0}/${useEth && is1Weth ? 'ETH' : poolDetails.symbol1} liquidity`);
       try {
         if (useEth && (is0Weth || is1Weth)) {
-          tx = await guniRouter.removeLiquidityETH(...burnParams)
+          const estimatedGas = await guniRouter.estimateGas.removeLiquidityETH(...burnParams)
+          tx = await guniRouter.removeLiquidityETH(...burnParams, {gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))})
         } else {
-          tx = await guniRouter.removeLiquidity(...burnParams)
+          const estimatedGas = await guniRouter.estimateGas.removeLiquidity(...burnParams)
+          tx = await guniRouter.removeLiquidity(...burnParams, {gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))})
         }
       } catch(_) {
         setShowTransactionModal(false)

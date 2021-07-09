@@ -209,16 +209,22 @@ function AddLiquidityPanel(props: PoolParams) {
       setWaitMessage(`Deposit ${useEth && is0Weth ? 'ETH' : poolDetails.symbol0} and/or ${useEth && is1Weth ? 'ETH' : poolDetails.symbol1} liquidity and mint G-UNI`)
       try {
         if (depositProtocol == 'addLiquidity') {
-          tx = await guniRouter.addLiquidity(...depositParams)
+          const estimatedGas = await guniRouter.estimateGas.addLiquidity(...depositParams)
+          tx = await guniRouter.addLiquidity(...depositParams, {gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))})
         } else if (depositProtocol == 'addLiquidityETH') {
+          const estimatedGas = await guniRouter.estimateGas.addLiquidityETH(...depositParams)
           tx = await guniRouter.addLiquidityETH(...depositParams, {
             value: is0Weth ? depositParams[1] : depositParams[2],
+            gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))
           })
         } else if (depositProtocol == 'rebalanceAndAddLiquidity') {
-          tx = await guniRouter.rebalanceAndAddLiquidity(...depositParams)
+          const estimatedGas = await guniRouter.estimateGas.rebalanceAndAddLiquidity(...depositParams)
+          tx = await guniRouter.rebalanceAndAddLiquidity(...depositParams, {gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))})
         } else if (depositProtocol == 'rebalanceAndAddLiquidityETH') {
+          const estimatedGas = await guniRouter.estimateGas.rebalanceAndAddLiquidityETH(...depositParams)
           tx = await guniRouter.rebalanceAndAddLiquidityETH(...depositParams, {
             value: is0Weth ? depositParams[1] : depositParams[2],
+            gasLimit: estimatedGas.add(ethers.BigNumber.from('50000'))
           })
         } else {
           setShowTransactionModal(false)
