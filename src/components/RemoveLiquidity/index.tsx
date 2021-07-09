@@ -59,25 +59,26 @@ function RemoveLiquidityPanel(props: PoolParams) {
     setIsTransactionPending(false);
     const input = inputBurn ? ethers.utils.parseUnits(inputBurn, poolDetails?.decimals.toString()) : ethers.constants.Zero;
     if (guniPool && guniRouter && poolDetails && input.gt(0)) {
-      setShowTransactionModal(true);
-      setWaitMessage(`Approve G-UNI`);
-      let tx;
+      setShowTransactionModal(true)
+      setWaitMessage(`Approve G-UNI`)
+      let tx
       try {
         tx = await guniPool.approve(guniRouter.address, input)
       } catch(_) {
-        setShowTransactionModal(false);
-        return;
+        setShowTransactionModal(false)
+        return
       }
       if (!tx) {
-        setShowTransactionModal(false);
-        return;       
+        setShowTransactionModal(false)
+        return
       }
-      setPendingTxHash(tx.hash);
-      setIsTransactionPending(true);
-      await tx.wait();
-      setIsApproved(true);
-      setIsTransactionPending(false);
-      setRemoveEnabled(true);
+      setPendingTxHash(tx.hash)
+      setIsTransactionPending(true)
+      await tx.wait()
+      setIsApproved(true)
+      setShowTransactionModal(false)
+      setIsTransactionPending(false)
+      setRemoveEnabled(true)
     }
   }
   const handleBurn = async () => {
@@ -101,13 +102,14 @@ function RemoveLiquidityPanel(props: PoolParams) {
       }
       if (!tx) {
         setShowTransactionModal(false);
-        return;       
+        return
       }
-      setPendingTxHash(tx.hash);
-      setIsTransactionPending(true);
-      await reset();
-      await tx.wait();
-      setIsTransactionPending(false);
+      setPendingTxHash(tx.hash)
+      setIsTransactionPending(true)
+      await reset()
+      await tx.wait()
+      setShowTransactionModal(false)
+      setIsTransactionPending(false)
     }
   }
   const handleTryInput = async () => {

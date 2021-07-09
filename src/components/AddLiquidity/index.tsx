@@ -165,6 +165,7 @@ function AddLiquidityPanel(props: PoolParams) {
       setPendingTxHash(tx.hash)
       setIsTransactionPending(true)
       await tx.wait()
+      setShowTransactionModal(false)
       setIsApproved0(true)
       setIsTransactionPending(false)
       if (isApproved1) {
@@ -193,6 +194,7 @@ function AddLiquidityPanel(props: PoolParams) {
       setPendingTxHash(tx.hash)
       setIsTransactionPending(true)
       await tx.wait()
+      setShowTransactionModal(false)
       setIsApproved1(true)
       setIsTransactionPending(false)
       if (isApproved0) {
@@ -242,7 +244,8 @@ function AddLiquidityPanel(props: PoolParams) {
       setPendingTxHash(tx.hash)
       await reset()
       await tx.wait()
-      setIsTransactionPending(false);
+      setShowTransactionModal(false)
+      setIsTransactionPending(false)
     }
   }
   const handleTryInputs = async () => {
