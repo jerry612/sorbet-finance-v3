@@ -385,6 +385,8 @@ function AddLiquidityPanel(props: PoolParams) {
         setIsApproved1(oneApproved);
         if (zeroApproved && oneApproved) {
           setAddEnabled(true);
+        } else {
+          setAddEnabled(false);
         }
       }
     }

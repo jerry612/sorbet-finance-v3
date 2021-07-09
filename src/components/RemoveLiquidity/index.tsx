@@ -164,6 +164,8 @@ function RemoveLiquidityPanel(props: PoolParams) {
         setIsApproved(approved);
         if (approved) {
           setRemoveEnabled(true);
+        } else {
+          setRemoveEnabled(false);
         }
       }
     }
