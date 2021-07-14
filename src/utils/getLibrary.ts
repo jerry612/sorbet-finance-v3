@@ -1,5 +1,5 @@
 import { Web3Provider, Network } from '@ethersproject/providers'
-
+import { isEthereumChain } from '@gelatonetwork/limit-orders-lib/dist/utils'
 class WorkaroundWeb3Provider extends Web3Provider {
   private _detectNetworkResult: Promise<Network> | null = null
 
@@ -9,14 +9,13 @@ class WorkaroundWeb3Provider extends Web3Provider {
 }
 
 export default function getLibrary(provider: any): Web3Provider {
-  const library = new WorkaroundWeb3Provider(
-    provider,
+  const chainId =
     typeof provider.chainId === 'number'
       ? provider.chainId
       : typeof provider.chainId === 'string'
       ? parseInt(provider.chainId)
       : 'any'
-  )
-  library.pollingInterval = 15000
+  const library = new WorkaroundWeb3Provider(provider, chainId)
+  library.pollingInterval = isEthereumChain(chainId) ? 15 : 4
   return library
 }
